@@ -1,8 +1,10 @@
 package com.weixinxk.statistic.policy;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.weixinxk.statistic.model.ReportData;
 import com.weixinxk.statistic.task.Task;
 
 /**********************************************************************
@@ -15,17 +17,22 @@ import com.weixinxk.statistic.task.Task;
  ***********************************************************************/
 public abstract class StatisticTask implements Runnable, Comparable<StatisticTask> {
 
+    protected Context context;
+    protected String url;
+    protected ReportData reportData;
     private final int priority;
-    // protected BaseBean baseBean;
 
-    public StatisticTask(String eventId, Bundle bundle, @NonNull int priority) {
-
-        this.priority = priority;
+    public StatisticTask(Context context, String url, ReportData reportData) {
+        this.reportData = reportData;
+        this.url = url;
+        this.priority = reportData.getPriority();
     }
 
     public abstract void init();
 
-    public abstract String getId();
+    public ReportData getReportData() {
+        return reportData;
+    }
 
     @Override
     public int compareTo(@NonNull StatisticTask o) {

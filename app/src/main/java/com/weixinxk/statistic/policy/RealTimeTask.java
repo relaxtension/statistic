@@ -1,6 +1,18 @@
 package com.weixinxk.statistic.policy;
 
+import android.content.Context;
 import android.os.Bundle;
+
+import com.frogshealth.statistic.CommonUtil;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.weixinxk.statistic.model.ReportData;
+import com.weixinxk.statistic.utils.CommonUtils;
+import com.weixinxk.statistic.utils.OkHttpUtils;
+
+import java.net.ResponseCache;
+
+import okhttp3.Response;
 
 /**********************************************************************
  * 实时策略类
@@ -12,31 +24,46 @@ import android.os.Bundle;
  ***********************************************************************/
 public class RealTimeTask extends StatisticTask {
 
-    public RealTimeTask(int priority) {
-        super(priority);
+    public RealTimeTask(Context context, String url, ReportData reportData) {
+        super(context, url, reportData);
 
     }
 
     @Override
     public void init() {
-
-    }
-
-    @Override
-    public String getId() {
-        return null;
+        // nothing
     }
 
     @Override
     public void run() {
+        if (CommonUtils.isNetworkAvailable(context)) {
+            String ipAddr = CommonUtils.getHostIp();
+            reportData.setIpAddr(ipAddr);
 
-        /*
-            判断是否联网。
-            如没联网，则保存采集信息到数据库。
-            如已联网，则发送高优先级网络请求。
-            请求成功，则删除存在的相关记录；请求失败或出错，则保存到数据库。
-            完成后执行上报服务。
-        */
+            Gson gson = new GsonBuilder().create();
+            String requstContent = gson.toJson(reportData, ReportData.class);
+
+            boolean requestSuccess = false;
+            try {
+                Response response = OkHttpUtils.post(context, url, requstContent);
+                if (response.isSuccessful()) {
+                    requestSuccess = true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (requestSuccess) {
+                // 删除存在的相关记录
+
+            } else {
+                // 保存到数据库
+            }
+        } else {
+            // 保存采集信息到数据库
+
+        }
+        // 启动上报服务
 
     }
 }

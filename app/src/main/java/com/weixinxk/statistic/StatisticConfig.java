@@ -10,7 +10,15 @@ package com.weixinxk.statistic;
  ***********************************************************************/
 public class StatisticConfig {
 
+    public static final int POLICY_REAL_TIME = 1;
+    public static final int POLICY_CYCLE = 2;
+    public static final int POLICY_AT_TIME = 3;
+
+    private int policy = POLICY_CYCLE;
+
     public StatisticConfig() {
 
     }
+
+
 }

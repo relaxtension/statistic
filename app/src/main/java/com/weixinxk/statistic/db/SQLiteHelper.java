@@ -8,16 +8,16 @@ package com.weixinxk.statistic.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
-import com.example.lisichen.statistic_db.consts.DbConsts;
+import com.weixinxk.statistic.consts.DbConsts;
+
 
 /***********************************************************************
  *
  * SQL helper
  *
  * @类名 SQLiteHelper
- * @包名 com.example.lisichen.statistic_db.db
+ * @包名 com.weixinxk.statistic.db
  * @类指责描述
  *
  * @作者 lisichen

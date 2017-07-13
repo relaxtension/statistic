@@ -1,8 +1,13 @@
 package com.weixinxk.statistic;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
+import com.frogshealth.statistic.IdMatcher;
+import com.weixinxk.statistic.model.ReportData;
 import com.weixinxk.statistic.policy.StatisticTask;
+import com.weixinxk.statistic.utils.EventMatcher;
+import com.weixinxk.statistic.utils.StringUtils;
 
 import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
@@ -70,5 +75,19 @@ public class StatisticManager {
         return false;
     }
 
+    public static void onEvent(Context context, @NonNull String eventId, String messageId, String content) {
+        ReportData reportData = new ReportData();
+        reportData.setEventId(eventId);
+        reportData.setEventType(EventMatcher.getEventType(eventId));
+        if (!StringUtils.isEmpty(messageId)) {
+            reportData.setMessageId(messageId);
+        }
+        if (!StringUtils.isEmpty(content)) {
+            reportData.setContent(content);
+        }
+
+
+        onEvent(context, IdMatcher.getPageId(event_id) ,event_id, 1);
+    }
 
 }

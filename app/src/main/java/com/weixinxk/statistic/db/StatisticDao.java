@@ -8,15 +8,11 @@ package com.weixinxk.statistic.db;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import com.example.lisichen.statistic_db.consts.DbConsts;
-import com.example.lisichen.statistic_db.mode.BaseBean;
+import com.weixinxk.statistic.consts.DbConsts;
+import com.weixinxk.statistic.model.BaseData;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /***********************************************************************
@@ -24,7 +20,7 @@ import java.util.List;
  * 数据库操作
  *
  * @类名 StatisticDao
- * @包名 com.example.lisichen.statistic_db.db
+ * @包名 com.weixinxk.statistic.db
  * @类指责描述
  *
  * @作者 lisichen
@@ -44,20 +40,20 @@ public class StatisticDao {
 
     /**
      * 插入
-     * @param statisticInfo
+     * @param baseData
      */
-    public void insert(BaseBean statisticInfo) {
+    public void insert(BaseData baseData) {
         SQLiteDatabase database = sqliteHelper.getWritableDatabase();
-        String sql = "INSERT INTO " + DbConsts.STATISTIC_DATA_TABLE_NAME + " (EVENT_ID, EVENT_TYPE, MESSAGE_ID, CONTENT, STATISTIC_LEVEL, MEASURE_TIME) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO " + DbConsts.STATISTIC_DATA_TABLE_NAME + " (EVENT_ID, EVENT_TYPE, MESSAGE_ID, CONTENT, PRIORITY, TRIGGER_TIME) VALUES (?, ?, ?, ?, ?, ?)";
         database.beginTransaction();
         try {
             List<Object> values = new ArrayList<>();
-            values.add(statisticInfo.getEventId());
-            values.add(statisticInfo.getEventType());
-            values.add(statisticInfo.getMessageId());
-            values.add(statisticInfo.getContent());
-            values.add(statisticInfo.getStatisticLevel());
-            values.add(statisticInfo.getMeasureTime());
+            values.add(baseData.getEventId());
+            values.add(baseData.getEventType());
+            values.add(baseData.getMessageId());
+            values.add(baseData.getContent());
+            values.add(baseData.getPriority());
+            values.add(baseData.getTriggerTime());
             database.execSQL(sql, values.toArray());
             database.setTransactionSuccessful();
         } finally {

@@ -1,7 +1,9 @@
 package com.weixinxk.statistic.policy;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.weixinxk.statistic.model.ReportData;
 import com.weixinxk.statistic.task.ProgressSender;
 import com.weixinxk.statistic.task.TaskResult;
 
@@ -13,29 +15,23 @@ import com.weixinxk.statistic.task.TaskResult;
  * @author zhangchi
  * @创建日期 2017/7/12
  ***********************************************************************/
-public class AtTimeTask implements StatisticTask {
+public class AtTimeTask extends StatisticTask {
 
-    @Override
-    public void init() {
-
+    public AtTimeTask(Context context, String url, ReportData reportData) {
+        super(context, url, reportData);
     }
 
     @Override
-    public String getId() {
-        return null;
+    public void init() {
+        // 设置AlarmManager
+
     }
 
     @Override
     public void run() {
-
         /*
             保存采集信息到数据库。
             当定时器到时执行上报服务。
         */
-    }
-
-    @Override
-    public int compareTo(@NonNull StatisticTask o) {
-        return 0;
     }
 }
