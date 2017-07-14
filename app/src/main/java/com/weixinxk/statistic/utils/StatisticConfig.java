@@ -19,83 +19,171 @@ package com.weixinxk.statistic.utils;
  ***********************************************************************/
 
 public class StatisticConfig {
-    /**
-     * 默认服务器地址
-     */
-    public static final String DEFAULT_URL = "http://publicobject.com/helloworld.txt";
-    /**
-     * 读取超时时长
-     */
-    public static final int READ_TIME_OUT = 30000;
-
-    /**
-     * 连接超时时长
-     */
-    public static final int CONN_TIME_OUT = 30000;
 
     /**
      * 实时策略
      */
-    public static final int STRATEGY_REAL_TIME = 0;
+    public static final int POLICY_REAL_TIME = 0;
 
     /**
-     * 固定时间策略
+     * 周期策略
      */
-    public static final int STRATEGY_FIXED_TIME = 1;
+    public static final int POLICY_CYCLE_TIME = 1;
 
     /**
-     * 周期时间策略
+     * 定时策略
      */
-    public static final int STRATEGY_CIRCLE_TIME = 2;
+    public static final int POLICY_FIXED_TIME = 2;
 
     /**
-     * 默认周期，1小时
+     * 默认策略
      */
-    public static final long DEFAULT_PERIODIC_TIME = 60 * 60 * 1000;
+    private static final int DEFAULT_POLICY = POLICY_CYCLE_TIME;
 
     /**
-     * 服务器地址
+     * 周期策略的默认时间间隔（秒），1小时
      */
-    private String mServerUrl = "";
+    private static final long DEFAULT_INTERVAL_TIME = 60 * 60;
 
     /**
-     * 周期时间(ms)
+     * 定时策略的默认小时数
      */
-    private long mPeriodicTime = -1;
+    private static final int DEFAULT_HOUR = 22;
 
     /**
-     * 时间策略
+     * 定时策略的默认分钟数
      */
-    private int mTimeStrategy = -1;
+    private static final int DEFAULT_MINUTE = 0;
 
+    /**
+     * 默认服务器地址
+     */
+    private static final String DEFAULT_URL = "http://publicobject.com/helloworld.txt";
 
-    public void setServerUrl(String url) {
-        this.mServerUrl = url;
+    /**
+     * 默认请求连接超时时间（秒）
+     */
+    private static final long DEFAULT_CONN_TIMEOUT = 30L;
+
+    /**
+     * 默认请求读取超时时间（秒）
+     */
+    private static final long DEFAULT_READ_TIMEOUT = 30L;
+
+    /**
+     * 默认请求写入超时时间（秒）
+     */
+    private static final long DEFAULT_WRITE_TIMEOUT = 30L;
+
+    /**
+     * 统计策略
+     */
+    private int mPolicy = DEFAULT_POLICY;
+
+    /**
+     * 周期策略的时间间隔（秒）
+     */
+    private long mIntervalTime = DEFAULT_INTERVAL_TIME;
+
+    /**
+     * 定时策略的小时数
+     */
+    private int mHour = DEFAULT_HOUR;
+
+    /**
+     * 定时策略的分钟数
+     */
+    private int mMinute = DEFAULT_MINUTE;
+
+    /**
+     * 上报地址
+     */
+    private String mUrl = DEFAULT_URL;
+
+    /**
+     * 请求连接超时时间（秒）
+     */
+    private long mConnTimeout = DEFAULT_CONN_TIMEOUT;
+
+    /**
+     * 请求读取超时时间（秒）
+     */
+    private long mReadTimeout = DEFAULT_READ_TIMEOUT;
+
+    /**
+     * 请求写入超时时间（秒）
+     */
+    private long mWriteTimeout = DEFAULT_WRITE_TIMEOUT;
+
+    public int getPolicy() {
+        return mPolicy;
     }
 
-    public String getServerUrl() {
-        if(mServerUrl == null || mServerUrl.isEmpty()) {
-            return DEFAULT_URL;
-        }
-        return mServerUrl;
+    public StatisticConfig setPolicy(int policy) {
+        this.mPolicy = policy;
+        return this;
     }
 
-    public void setPeriodicTime(long time) {
-        this.mPeriodicTime = time;
+    public long getIntervalTime() {
+        return mIntervalTime;
     }
 
-    public long getPeriodicTime() {
-        if(mPeriodicTime == -1) {
-            return DEFAULT_PERIODIC_TIME;
-        }
-        return mPeriodicTime;
+    public StatisticConfig setIntervalTime(long intervalTime) {
+        this.mIntervalTime = intervalTime;
+        return this;
     }
 
-    public void setTimeStrategy(int strategy) {
-        this.mTimeStrategy = strategy;
+    public int getHour() {
+        return mHour;
     }
 
-    public int getTimeStrategy() {
-        return mTimeStrategy;
+    public StatisticConfig setHour(int hour) {
+        this.mHour = hour;
+        return this;
+    }
+
+    public int getMinute() {
+        return mMinute;
+    }
+
+    public StatisticConfig setMinute(int minute) {
+        this.mMinute = minute;
+        return this;
+    }
+
+    public String getUrl() {
+        return mUrl;
+    }
+
+    public StatisticConfig setUrl(String url) {
+        this.mUrl = url;
+        return this;
+    }
+
+    public long getConnTimeout() {
+        return mConnTimeout;
+    }
+
+    public StatisticConfig setConnTimeout(long connTimeout) {
+        this.mConnTimeout = connTimeout;
+        return this;
+    }
+
+    public long getReadTimeout() {
+        return mReadTimeout;
+    }
+
+    public StatisticConfig setReadTimeout(long readTimeout) {
+        this.mReadTimeout = readTimeout;
+        return this;
+    }
+
+    public long getWriteTimeout() {
+        return mWriteTimeout;
+    }
+
+    public StatisticConfig setWriteTimeout(long writeTimeout) {
+        this.mWriteTimeout = writeTimeout;
+        return this;
     }
 }
