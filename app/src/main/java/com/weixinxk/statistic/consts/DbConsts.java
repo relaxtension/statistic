@@ -23,26 +23,61 @@ import java.util.List;
  ***********************************************************************/
 
 public class DbConsts {
-    /**
-     * 统计表表名.
-     */
-    public static final String STATISTIC_DATA_TABLE_NAME = "statistic_data";
 
     /**
      * 数据库名
      */
     public static final String DATA_BASE_NAME = "data.db";
+
+    /**
+     * 统计表表名.
+     */
+    public static final String STATISTIC_TABLE_NAME = "statistic_data";
+
+    /**
+     * 统计数据主键
+     */
+    public static final String STATISTIC_ID = "ID";
+    /**
+     * 事件ID
+     */
+    public static final String STATISTIC_EVENT_ID = "EVENT_ID";
+
+    /**
+     * 时间类型
+     */
+    public static final String STATISTIC_EVENT_TYPE = "EVENT_TYPE";
+
+    /**
+     * 消息ID
+     */
+    public static final String STATISTIC_MESSAGE_ID = "MESSAGE_ID";
+
+    /**
+     * 消息内容
+     */
+    public static final String STATISTIC_CONTENT = "CONTENT";
+
+    /**
+     * 统计等级
+     */
+    public static final String STATISTIC_PRIORITY = "PRIORITY";
+    /**
+     * 统计等级
+     */
+    public static final String STATISTIC_TRIGGER_TIME = "TRIGGER_TIME";
+
     /**
      * 创建统计表.
      */
-    private static final String CREATE_TABLE_STATISTIC_DATA = "CREATE TABLE " + DbConsts.STATISTIC_DATA_TABLE_NAME + " (" +
-            "STATISTIC_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "EVENT_ID VARCHAR(32) NOT NULL, " +
-            "EVENT_TYPE INTEGER NULL, " +
-            "MESSAGE_ID VARCHAR(20) NULL, " +
-            "CONTENT VARCHAR(20) NULL, " +
-            "STATISTIC_LEVEL INTEGER DEFAULT 1, " +
-            "MEASURE_TIME INTEGER NULL)";
+    private static final String CREATE_TABLE_STATISTIC_DATA = "CREATE TABLE " + STATISTIC_TABLE_NAME + " ("
+            + STATISTIC_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + STATISTIC_EVENT_ID + " VARCHAR(32) NOT NULL, "
+            + STATISTIC_EVENT_TYPE + " INTEGER NULL, "
+            + STATISTIC_MESSAGE_ID + " VARCHAR(20) NULL, "
+            + STATISTIC_CONTENT + " VARCHAR(20) NULL, "
+            + STATISTIC_PRIORITY + " INTEGER DEFAULT 0, "
+            + STATISTIC_TRIGGER_TIME + " INTEGER NULL)";
 
     /**
      * Sql语句列表.
@@ -54,38 +89,5 @@ public class DbConsts {
         sqls.add(CREATE_TABLE_STATISTIC_DATA);
         SQL_LIST = Collections.unmodifiableList(sqls);
     }
-
-    /**
-     * 统计数据主键
-     */
-    public static final String STATISTIC_DATA_STATISTIC_ID = "STATISTIC_ID";
-    /**
-     * 事件ID
-     */
-    public static final String STATISTIC_DATA_EVENT_ID = "EVENT_ID";
-
-    /**
-     * 时间类型
-     */
-    public static final String STATISTIC_DATA_EVENT_TYPE = "EVENT_TYPE";
-
-    /**
-     * 消息ID
-     */
-    public static final String STATISTIC_DATA_MESSAGE_ID = "MESSAGE_ID";
-
-    /**
-     * 消息内容
-     */
-    public static final String STATISTIC_DATA_CONTENT = "CONTENT";
-
-    /**
-     * 统计等级
-     */
-    public static final String STATISTIC_DATA_STATISTIC_LEVEL = "STATISTIC_LEVEL";
-    /**
-     * 统计等级
-     */
-    public static final String STATISTIC_DATA_STATISTIC_TIME = "MEASURE_TIME";
 
 }

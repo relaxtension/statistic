@@ -3,7 +3,9 @@
  * Company: 广州蛙鸣智能科技有限公司.
  * Copyright: Copyright (c) 2016
  * **********************************************************************/
-package com.weixinxk.statistic.utils;
+package com.weixinxk.statistic;
+
+import android.app.Application;
 
 /***********************************************************************
  *
@@ -58,7 +60,7 @@ public class StatisticConfig {
     /**
      * 默认服务器地址
      */
-    private static final String DEFAULT_URL = "http://publicobject.com/helloworld.txt";
+    private static final String DEFAULT_REPORT_URL = "http://publicobject.com/helloworld.txt";
 
     /**
      * 默认请求连接超时时间（秒）
@@ -98,7 +100,7 @@ public class StatisticConfig {
     /**
      * 上报地址
      */
-    private String mUrl = DEFAULT_URL;
+    private String mReportUrl = DEFAULT_REPORT_URL;
 
     /**
      * 请求连接超时时间（秒）
@@ -151,12 +153,12 @@ public class StatisticConfig {
         return this;
     }
 
-    public String getUrl() {
-        return mUrl;
+    public String getReportUrl() {
+        return mReportUrl;
     }
 
-    public StatisticConfig setUrl(String url) {
-        this.mUrl = url;
+    public StatisticConfig setReportUrl(String reportUrl) {
+        this.mReportUrl = reportUrl;
         return this;
     }
 

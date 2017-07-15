@@ -13,6 +13,7 @@ import java.util.Map;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.Headers;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -31,40 +32,33 @@ import okhttp3.Response;
  *
  ***********************************************************************/
 
-public class OkHttpUtils {
+public class OkHttpHelper {
 
-    private static OkHttpClient mOkHttpClient = new OkHttpBuilder().build();
+    private static volatile OkHttpHelper sOkHttpHelper;
 
-    public static String joinParasWithEncodedValue(Map<String, String> parasMap) {
-        StringBuilder paras = new StringBuilder("");
-        if (parasMap != null && parasMap.size() > 0) {
-            Iterator<Map.Entry<String, String>> ite = parasMap.entrySet().iterator();
-            try {
-                while (ite.hasNext()) {
-                    Map.Entry<String, String> entry = (Map.Entry<String, String>) ite.next();
-                    paras.append(entry.getKey()).append("=").append(StringUtils.utf8Encode(entry.getValue()));
-                    if (ite.hasNext()) {
-                        paras.append("&");
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return paras.toString();
+    private OkHttpClient mOkHttpClient;
+
+    private OkHttpHelper() {
     }
 
-    public static String getUrlWithValueEncodeParas(String url, Map<String, String> parasMap) {
-        StringBuilder urlWithParas = new StringBuilder(StringUtils.isEmpty(url) ? "" : url);
-        String paras = joinParasWithEncodedValue(parasMap);
-        if (!StringUtils.isEmpty(paras)) {
-            urlWithParas.append("?").append(paras);
+    private static OkHttpHelper getInstance() {
+        if (sOkHttpHelper == null) {
+            synchronized (OkHttpHelper.class) {
+                if (sOkHttpHelper == null) {
+                    sOkHttpHelper = new OkHttpHelper();
+                }
+            }
         }
-        return urlWithParas.toString();
+        return sOkHttpHelper;
+    }
+
+    public static void init(OkHttpBuilder okHttpBuilder) {
+        OkHttpHelper okHttpHelper = OkHttpHelper.getInstance();
+        okHttpHelper.mOkHttpClient = okHttpBuilder.build();
     }
 
     public static Response get(Context context, String url, Map<String, String> params) throws Exception {
-        return OkHttpUtils.get(context, url, null, params);
+        return OkHttpHelper.get(context, url, null, params);
     }
 
     public static Response get(Context context, String url, Map<String, String> headers, Map<String, String> params) throws Exception {
@@ -74,11 +68,11 @@ public class OkHttpUtils {
             requestBuilder.headers(Headers.of(headers));
         }
         Request request = requestBuilder.build();
-        return mOkHttpClient.newCall(request).execute();
+        return OkHttpHelper.getInstance().mOkHttpClient.newCall(request).execute();
     }
 
     public static void get(Context context, String url, Map<String, String> params, Callback responseCallback) throws Exception {
-        OkHttpUtils.get(context, url, null, params, responseCallback);
+        OkHttpHelper.get(context, url, null, params, responseCallback);
     }
 
     public static void get(Context context, String url, Map<String, String> headers, Map<String, String> params, Callback responseCallback) throws Exception {
@@ -88,11 +82,11 @@ public class OkHttpUtils {
             requestBuilder.headers(Headers.of(headers));
         }
         Request request = requestBuilder.build();
-        mOkHttpClient.newCall(request).enqueue(responseCallback);
+        OkHttpHelper.getInstance().mOkHttpClient.newCall(request).enqueue(responseCallback);
     }
 
     public static Response post(Context context, String url, Map<String, String> params) throws Exception {
-        return OkHttpUtils.post(context, url, null, params);
+        return OkHttpHelper.post(context, url, null, params);
     }
 
     public static Response post(Context context, String url, Map<String, String> headers, Map<String, String> params) throws Exception {
@@ -110,11 +104,11 @@ public class OkHttpUtils {
             requestBuilder.post(requestBody);
         }
         Request request = requestBuilder.build();
-        return mOkHttpClient.newCall(request).execute();
+        return OkHttpHelper.getInstance().mOkHttpClient.newCall(request).execute();
     }
 
     public static Response post(Context context, String url, String requestContent) throws Exception {
-        return OkHttpUtils.post(context, url, null, requestContent);
+        return OkHttpHelper.post(context, url, null, requestContent);
     }
 
     public static Response post(Context context, String url, Map<String, String> headers, String requestContent) throws Exception {
@@ -128,11 +122,11 @@ public class OkHttpUtils {
             requestBuilder.post(requestBody);
         }
         Request request = requestBuilder.build();
-        return mOkHttpClient.newCall(request).execute();
+        return OkHttpHelper.getInstance().mOkHttpClient.newCall(request).execute();
     }
 
     public static void post(Context context, String url, Map<String, String> params, Callback responseCallback) throws Exception {
-        OkHttpUtils.post(context, url, null, params, responseCallback);
+        OkHttpHelper.post(context, url, null, params, responseCallback);
     }
 
     public static void post(Context context, String url, Map<String, String> headers, Map<String, String> params, Callback responseCallback) throws Exception {
@@ -150,11 +144,11 @@ public class OkHttpUtils {
             requestBuilder.post(requestBody);
         }
         Request request = requestBuilder.build();
-        mOkHttpClient.newCall(request).enqueue(responseCallback);
+        OkHttpHelper.getInstance().mOkHttpClient.newCall(request).enqueue(responseCallback);
     }
 
     public static void post(Context context, String url, String requestContent, Callback responseCallback) throws Exception {
-        OkHttpUtils.post(context, url, null, requestContent, responseCallback);
+        OkHttpHelper.post(context, url, null, requestContent, responseCallback);
     }
 
     public static void post(Context context, String url, Map<String, String> headers, String requestContent, Callback responseCallback) throws Exception {
@@ -168,6 +162,6 @@ public class OkHttpUtils {
             requestBuilder.post(requestBody);
         }
         Request request = requestBuilder.build();
-        mOkHttpClient.newCall(request).enqueue(responseCallback);
+        OkHttpHelper.getInstance().mOkHttpClient.newCall(request).enqueue(responseCallback);
     }
 }

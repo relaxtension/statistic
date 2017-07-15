@@ -1,4 +1,4 @@
-package com.weixinxk.statistic.task;
+package com.weixinxk.statistic.request;
 
 /**********************************************************************
  * 任务结果

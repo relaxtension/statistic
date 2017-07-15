@@ -25,7 +25,7 @@ public class BaseData {
     /**
      * 统计ID
      */
-    private transient int mId;
+    private transient String mId;
 
     /**
      * 事件ID
@@ -36,7 +36,7 @@ public class BaseData {
      * 事件类型
      */
     @SerializedName("type")
-    private int mEventType;
+    private String mEventType;
 
     /**
      * 消息ID
@@ -53,18 +53,18 @@ public class BaseData {
     /**
      * 优先级
      */
-    private transient int mPriority;
+    private transient String mPriority;
 
     /**
      * 触发时间
      */
-    private transient long mTriggerTime;
+    private transient String mTriggerTime;
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.mId = id;
     }
 
-    public int getId() {
+    public String getId() {
         return mId;
     }
 
@@ -76,11 +76,11 @@ public class BaseData {
         return mEventId;
     }
 
-    public void setEventType(int type) {
+    public void setEventType(String type) {
         this.mEventType = type;
     }
 
-    public int getEventType() {
+    public String getEventType() {
         return mEventType;
     }
 
@@ -100,19 +100,19 @@ public class BaseData {
         return mContent;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(String priority) {
         this.mPriority = priority;
     }
 
-    public int getPriority() {
+    public String getPriority() {
         return mPriority;
     }
 
-    public void setTriggerTime(long time) {
+    public void setTriggerTime(String time) {
         this.mTriggerTime = time;
     }
 
-    public long getTriggerTime() {
+    public String getTriggerTime() {
         return mTriggerTime;
     }
 

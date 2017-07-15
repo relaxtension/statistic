@@ -29,6 +29,7 @@ import java.util.List;
  ***********************************************************************/
 
 public class StatisticDao {
+
     /**
      *
      */
@@ -44,7 +45,13 @@ public class StatisticDao {
      */
     public void insert(BaseData baseData) {
         SQLiteDatabase database = sqliteHelper.getWritableDatabase();
-        String sql = "INSERT INTO " + DbConsts.STATISTIC_DATA_TABLE_NAME + " (EVENT_ID, EVENT_TYPE, MESSAGE_ID, CONTENT, PRIORITY, TRIGGER_TIME) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO " + DbConsts.STATISTIC_TABLE_NAME + " ("
+                + DbConsts.STATISTIC_EVENT_ID + ", "
+                + DbConsts.STATISTIC_EVENT_TYPE + ", "
+                + DbConsts.STATISTIC_MESSAGE_ID + ", "
+                + DbConsts.STATISTIC_CONTENT + ", "
+                + DbConsts.STATISTIC_PRIORITY + ", "
+                + DbConsts.STATISTIC_TRIGGER_TIME + ") VALUES (?, ?, ?, ?, ?, ?)";
         database.beginTransaction();
         try {
             List<Object> values = new ArrayList<>();
@@ -68,7 +75,7 @@ public class StatisticDao {
      */
     public Cursor query(long time) {
         SQLiteDatabase database = sqliteHelper.getReadableDatabase();
-        String sql = "SELECT * FROM " + DbConsts.STATISTIC_DATA_TABLE_NAME + " where "+ DbConsts.STATISTIC_DATA_STATISTIC_TIME + " < " + '\"' + time + '\"';
+        String sql = "SELECT * FROM " + DbConsts.STATISTIC_TABLE_NAME + " where "+ DbConsts.STATISTIC_TRIGGER_TIME + " < " + '\"' + time + '\"';
         Cursor result = database.rawQuery(sql, new String[] {});
         return result;
     }
@@ -77,9 +84,9 @@ public class StatisticDao {
      * 删除
      * @param id 删除的数据
      */
-    public void delete(int id) {
+    public void delete(String id) {
         SQLiteDatabase database = sqliteHelper.getWritableDatabase();
-        String sql = "DELETE FROM " + DbConsts.STATISTIC_DATA_TABLE_NAME + " WHERE " + DbConsts.STATISTIC_DATA_STATISTIC_ID + " = ?";
-        database.execSQL(sql, new String[] {id + ""});
+        String sql = "DELETE FROM " + DbConsts.STATISTIC_TABLE_NAME + " WHERE " + DbConsts.STATISTIC_ID + " = ?";
+        database.execSQL(sql, new String[] {id});
     }
 }

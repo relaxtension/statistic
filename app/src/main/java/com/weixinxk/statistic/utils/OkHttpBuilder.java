@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -21,7 +22,9 @@ public class OkHttpBuilder {
 
     public static final String TAG = OkHttpBuilder.class.getSimpleName();
 
-    private static final long DEFAULT_SECONDS = 60L;
+    public static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
+
+    private static final long DEFAULT_SECONDS = 30L;
 
     private long connectTimeout = DEFAULT_SECONDS; // 连接超时时间 - 60秒
     private long readTimeOut = DEFAULT_SECONDS; // 读取超时时间
@@ -102,7 +105,7 @@ public class OkHttpBuilder {
                 Buffer buffer = new Buffer();
                 request.body().writeTo(buffer);
                 String requestContent = IOUtils.read(buffer.inputStream());
-                RequestBody requestBody = RequestBody.create(OkHttpUtils.MEDIA_TYPE_JSON, requestContent);
+                RequestBody requestBody = RequestBody.create(MEDIA_TYPE_JSON, requestContent);
 
                 // 构建新请求
                 Request newRequest = request.newBuilder()
@@ -124,7 +127,7 @@ public class OkHttpBuilder {
 
                 // 构建响应体
                 String responseContent = response.body().string();
-                ResponseBody responseBody = ResponseBody.create(OkHttpUtils.MEDIA_TYPE_JSON, responseContent);
+                ResponseBody responseBody = ResponseBody.create(MEDIA_TYPE_JSON, responseContent);
                 // 构建新响应
                 Response newResponse = response.newBuilder()
                         .body(responseBody)
