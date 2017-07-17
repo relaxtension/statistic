@@ -175,8 +175,6 @@ public class StatisticAgent {
         // 依据策略执行
         StatisticAgent statisticAgent = StatisticAgent.getInstance();
         if (statisticAgent.mPolicy != null) {
-            // exec.execute(new PrioritizedTaskProducer(queue, exec));
-
             statisticAgent.mPolicy.execute(reportData);
         }
     }
